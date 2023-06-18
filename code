@@ -1,0 +1,57 @@
+import random
+import math
+
+# Taking input for the lower bound
+lower = int(input("Enter Lower bound: "))
+
+# Taking input for the upper bound
+upper = int(input("Enter Upper bound: "))
+
+# Generating a random number between the lower and upper bounds
+x = random.randint(lower, upper)
+
+# 1. "upper - lower + 1": This calculates the range of numbers to be guessed by subtracting the lower bound from the upper bound and adding 1 to include both the lower and upper bounds in the range.
+# 1-a. To calculate the range of numbers, we need to consider both the lower and upper bounds inclusively
+# 1-b. Let's take an example to illustrate this. Suppose the user enters a lower bound of 1 and an upper bound of 10. In this case, we want to include all the numbers from 1 to 10 within the range.
+# 1-c. If we only subtract the lower bound from the upper bound (upper - lower), we get 10 - 1 = 9.
+# 1-d. However, this value represents the length of the range, not the count of numbers within the range.
+# In this example, the length of the range is 9, but we actually have 10 numbers (1, 2, 3, 4, 5, 6, 7, 8, 9, 10).
+# 2. The math.log() function in Python is used to calculate the logarithm of a number.
+# In this code, it is specifically used to calculate the logarithm base 2 (log base 2) of the range of numbers to be guessed.
+# 2-a. math.log(upper - lower + 1, 2): This calculates the logarithm base 2 of the count of numbers within the range.
+# The logarithm base 2 is used because it represents the number of times we need to divide the range in half to narrow down to the correct number.
+# 2-b. Suppose the range of numbers to be guessed is from 1 to 100, inclusively. In this case, the count of numbers within the range is 100.
+# Using math.log(100, 2), we calculate the logarithm base 2 of 100, which is approximately 6.643856189774724. Rounded to the nearest whole number, it is 7.
+# So, in this example, it would take approximately 7 guesses to find the correct number within the range of 1 to 100.
+# Each guess allows us to divide the range in half, narrowing down the possible options.
+# By calculating math.log(upper - lower + 1, 2), the code provides an estimate of the minimum number of guesses required to find the correct number within the given range.
+# 3. round(math.log(upper - lower + 1, 2)): This rounds the calculated logarithm value to the nearest integer.
+# Since we can't have a fractional number of guesses, rounding ensures that we have a whole number of guesses required.
+print("\n\tYou've only ", round(math.log(upper - lower + 1, 2)), " chances to guess the integer!\n")
+
+# Initializing the number of guesses
+count = 0
+
+# Calculating the minimum number of guesses depends upon the range
+while count < math.log(upper - lower + 1, 2):
+    
+    # The purpose of incrementing count is to keep track of the number of guesses made by the player. After each guess, the count variable is incremented to reflect that another guess has been made.
+    count += 1
+
+    # Taking the guessing number as input
+    guess = int(input("Guess a number: "))
+
+    # Condition testing
+    if x == guess:
+        print("Congratulations! You guessed it correctly in ", count, " tries.")
+        # Once guessed, the loop will break
+        break
+    elif x > guess:
+        print("You guessed too small!")
+    elif x < guess:
+        print("You guessed too high!")
+
+# If the number of guesses exceeds the required limit, display this output
+if count >= math.log(upper - lower + 1, 2):
+    print("\nThe number is %d" % x)
+    print("\tBetter Luck Next time!")
